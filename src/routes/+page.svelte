@@ -1,13 +1,26 @@
 <script lang="ts">
   import Clock from "./Clock.svelte";
   import Settings from "./Settings.svelte";
+  import Plant from "./Plant.svelte";
 
   let hourFormat = $state("h12");
+  let page = $state("home");
+
+  $inspect(page);
 </script>
 
 <main class="container">
-  <Clock {hourFormat}/>
-  <Settings bind:format={hourFormat}/>
+  {#if $state.snapshot(page) === "home"}
+    <Clock {hourFormat}/>
+    <Plant/>
+  {:else}
+    <Settings bind:format={hourFormat}/>
+  {/if}
+
+  <span id="switcher">
+    <a href="/" onclick={ () => {page = "home"} }>home</a>
+    <a href="/" onclick={ () => {page = "settings"} }>settings</a>
+  </span>
 </main>
 
 <style>
@@ -20,41 +33,50 @@
     font-weight: 400;
 
     color: #0f0f0f;
-    background-color: #f6f6f6;
+    background-image: url("/bk1.png");
+    background-position: center;
+    background-repeat: repeat;
+    background-size: calc(128px * 0.25);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+
+    overflow: hidden;
+  }
+
+  #switcher {
+    position: fixed;
+    top: calc(90vh - 1em);
+
+    width: 100vw;
+
+    text-align: center;
   }
 
   .container {
     margin: 0;
-    padding-top: 10vh;
+    padding-top: 5vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
   }
 
-  h1 {
-    font-family: "Bagel Fat One", system-ui;
-    font-weight: 400;
-    font-style: normal;
-
-    text-align: center;
-    font-size: 4em;
-
-    text-transform: uppercase;
-    /* -webkit-text-stroke: #0f0f0f 3px; */
+  a {
+    color: #0f0f0f;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       color: #f6f6f6;
-      background-color: #2f2f2f;
+/*      background-color: #2f2f2f;*/
+    }
+
+    a {
+      color: #f6f6f6;
     }
   }
-
 </style>
