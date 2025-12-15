@@ -12,11 +12,12 @@
   "app": {
     "windows": [
       {
-	"transparent": true,
-	"decorations": false,
+  "transparent": true,
+  "decorations": false,
+  "shadow": false,
 	"resizable": true,
- 	"width": 800,
-	"height": 600,
+ 	"width": 300,
+	"height": 400,
 	"title": "blossomy"
       }
     ],
